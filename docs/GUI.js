@@ -41,14 +41,14 @@ class GUI {
         this.setMessage("");
     }
     drag(ev) {
-        ev.dataTransfer.setData("text/plain", JSON.stringify(this.coordinates(ev.currentTarget.parentNode)));
+        ev.dataTransfer.setData("origin", JSON.stringify(this.coordinates(ev.currentTarget.parentNode)));
     }
     allowDrop(ev) {
         ev.preventDefault();
     }
     drop(ev) {
         ev.preventDefault();
-        let bTableData = this.getTableData(JSON.parse(ev.dataTransfer.getData("text/plain")));
+        let bTableData = this.getTableData(JSON.parse(ev.dataTransfer.getData("origin")));
         this.innerPlay(bTableData, ev.currentTarget, false);
     }
     getTableData({ x, y }) {
