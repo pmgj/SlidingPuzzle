@@ -1,0 +1,74 @@
+body {
+    --color: #2471FF;
+}
+
+table {
+    margin: 0 auto;
+}
+
+caption {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+div {
+    cursor: default;
+    text-align: center;
+    font-size: 24px;
+    font-family: sans-serif;
+    position: relative;
+    border: 3px solid var(--color);
+    width: 49px;
+    height: 49px;
+    vertical-align: middle;
+    display: table-cell;
+    background-color: var(--color);
+    color: white;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+}
+
+@keyframes gameover {
+    0% {
+        background-color: var(--color);
+        border-color: var(--color);
+    }
+
+    25% {
+        --color1: #00B8AE;
+        background-color: var(--color1);
+        border-color: var(--color1);
+    }
+
+    50% {
+        --color1: #299534;
+        background-color: var(--color1);
+        border-color: var(--color1);
+    }
+
+    75% {
+        --color1: #B1FF7D;
+        background-color: var(--color1);
+        border-color: var(--color1);
+    }
+
+    100% {
+        --color1: #FFAF85;
+        background-color: var(--color1);
+        border-color: var(--color1);
+    }
+}
+
+p {
+    text-align: center;
+}
+
+#size {
+    width: 50px;
+}
+
+.selected {
+    border-color: red;
+}
