@@ -3,6 +3,9 @@ import End from "./End.js";
 
 export default class SlidingPuzzle {
     constructor(size) {
+        if(size < 3) {
+            throw new Error("Incorrect size.");
+        }
         this.board = Array(size).fill().map(() => Array(size).fill());
         this.size = size;
         let num = 1;

@@ -51,7 +51,7 @@ class GUI {
         let bTableData = this.getTableData(JSON.parse(ev.dataTransfer.getData("text/plain")));
         this.innerPlay(bTableData, ev.currentTarget, false);
     }
-    getTableData({x, y}) {
+    getTableData({ x, y }) {
         let table = document.querySelector("table");
         return table.rows[x].cells[y];
     }
@@ -65,27 +65,25 @@ class GUI {
         }
     }
     innerPlay(bTableData, eTableData, animation) {
+        let beginCell = this.coordinates(bTableData);
+        let endCell = this.coordinates(eTableData);
+        let image = bTableData.firstChild;
         try {
-            let beginCell = this.coordinates(bTableData);
-            let endCell = this.coordinates(eTableData);
-            let { x: or, y: oc } = beginCell;
-            let { x: dr, y: dc } = endCell;
             let end = this.game.move(beginCell, endCell);
-            let image = bTableData.firstChild;
             let move = () => {
-                eTableData.appendChild(bTableData.firstChild);
+                eTableData.appendChild(image);
                 this.changeMessage(end);
             };
             if (animation) {
+                let { x: or, y: oc } = beginCell;
+                let { x: dr, y: dc } = endCell;
                 let anim = image.animate([{ top: 0, left: 0 }, { top: `${(dr - or) * 58}px`, left: `${(dc - oc) * 58}px` }], 500);
                 anim.onfinish = move;
-                bTableData.firstChild.classList.remove("selected");
             } else {
                 move();
             }
         } catch (ex) {
             this.setMessage(ex);
-            bTableData.firstChild.classList.remove("selected");
         }
     }
     setMessage(message) {
