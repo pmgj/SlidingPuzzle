@@ -3,7 +3,7 @@ import End from "./End.js";
 
 export default class SlidingPuzzle {
     constructor(size) {
-        if(size < 3) {
+        if (size < 3) {
             throw new Error("Incorrect size.");
         }
         this.board = Array(size).fill().map(() => Array(size).fill());
@@ -14,6 +14,7 @@ export default class SlidingPuzzle {
                 this.board[i][j] = num === size * size ? 0 : num++;
             }
         }
+        this.shuffle();
     }
     shuffle() {
         let array = this.board.flat();
@@ -41,7 +42,7 @@ export default class SlidingPuzzle {
         };
         let isSlidePuzzleSolvable = (numberOfInversions, width, emptyTilePosition) => {
             let GetRowNumberFromBelow = (width, emptyTilePosition) => {
-                return width - (emptyTilePosition / width);
+                return width - Math.floor(emptyTilePosition / width);
             };
             if (width % 2 !== 0)
                 return numberOfInversions % 2 === 0;
@@ -59,6 +60,7 @@ export default class SlidingPuzzle {
         };
         randomize(array);
         let numberInversions = countInversions(array);
+        console.log(isSlidePuzzleSolvable(numberInversions, this.size, array.indexOf(0)));
         if (!isSlidePuzzleSolvable(numberInversions, this.size, array.indexOf(0))) {
             SwapTilesInSlidePuzzle(array);
         }
@@ -109,8 +111,8 @@ export default class SlidingPuzzle {
         let { x, y } = cell;
         let cells = [new Cell(x - 1, y), new Cell(x + 1, y), new Cell(x, y - 1), new Cell(x, y + 1)];
         for (let c of cells) {
-            let {x: row, y: col} = c;
-            if(this.onBoard(c) && this.board[row][col] === 0) {
+            let { x: row, y: col } = c;
+            if (this.onBoard(c) && this.board[row][col] === 0) {
                 return c;
             }
         }

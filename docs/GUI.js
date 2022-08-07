@@ -16,7 +16,6 @@ class GUI {
     init() {
         let size = document.getElementById("size");
         this.game = new SlidingPuzzle(parseInt(size.value));
-        this.game.shuffle();
         let tab = this.game.getBoard();
         let tbody = document.querySelector("tbody");
         tbody.innerHTML = "";
