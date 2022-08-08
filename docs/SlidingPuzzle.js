@@ -40,19 +40,17 @@ export default class SlidingPuzzle {
             }
             return numberInversions;
         };
-        let isSlidePuzzleSolvable = (numberOfInversions, width, emptyTilePosition) => {
-            let GetRowNumberFromBelow = (width, emptyTilePosition) => {
-                return width - Math.floor(emptyTilePosition / width);
-            };
-            if (width % 2 !== 0)
+        let isSlidePuzzleSolvable = (numberOfInversions, emptyTilePosition) => {
+            if (this.size % 2 !== 0) {
                 return numberOfInversions % 2 === 0;
-            let rowNumber = GetRowNumberFromBelow(width, emptyTilePosition);
+            }
+            let rowNumber = this.size - Math.floor(emptyTilePosition / this.size);
             return rowNumber % 2 !== 0 ? numberOfInversions % 2 === 0 : numberOfInversions % 2 !== 0;
         };
         let SwapTilesInSlidePuzzle = puzzle => {
             if (puzzle.length < 2)
                 return;
-            if (puzzle[0] != 0 && puzzle[1] != 0) {
+            if (puzzle[0] !== 0 && puzzle[1] !== 0) {
                 [puzzle[0], puzzle[1]] = [puzzle[1], puzzle[0]];
             } else {
                 [puzzle[puzzle.length - 1], puzzle[puzzle.length - 2]] = [puzzle[puzzle.length - 2], puzzle[puzzle.length - 1]];
@@ -60,8 +58,7 @@ export default class SlidingPuzzle {
         };
         randomize(array);
         let numberInversions = countInversions(array);
-        console.log(isSlidePuzzleSolvable(numberInversions, this.size, array.indexOf(0)));
-        if (!isSlidePuzzleSolvable(numberInversions, this.size, array.indexOf(0))) {
+        if (!isSlidePuzzleSolvable(numberInversions, array.indexOf(0))) {
             SwapTilesInSlidePuzzle(array);
         }
         for (let i = 0; i < array.length; i++) {
