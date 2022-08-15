@@ -13,6 +13,19 @@ class GUI {
         start.onclick = this.init.bind(this);
         this.init();
     }
+    unregisterEvents() {
+        let tds = document.querySelectorAll("td");
+        tds.forEach(td => {
+            td.onclick = undefined;
+            td.ondragover = undefined;
+            td.ondrop = undefined;
+            let div = td.firstChild;
+            if(div) {
+                div.ondragstart = undefined;
+                div.draggable = false;
+            }
+        });
+    }
     init() {
         let size = document.getElementById("size");
         this.game = new SlidingPuzzle(parseInt(size.value));
@@ -97,6 +110,7 @@ class GUI {
         this.setMessage(`Game Over! You win.`);
         let numbers = document.querySelectorAll("td div");
         numbers.forEach(n => n.style.animationName = "gameover");
+        this.unregisterEvents();
     }
     coordinates(cell) {
         return new Cell(cell.parentNode.rowIndex, cell.cellIndex);
