@@ -1,5 +1,5 @@
 body {
-    --color: #2471FF;
+    --color: blue;
 }
 
 table {
@@ -36,26 +36,38 @@ div {
         border-color: var(--color);
     }
 
-    25% {
-        --color1: #00B8AE;
+    14% {
+        --color1: indigo;
         background-color: var(--color1);
         border-color: var(--color1);
     }
 
-    50% {
-        --color1: #299534;
+    28% {
+        --color1: violet;
+        background-color: var(--color1);
+        border-color: var(--color1);
+    }
+
+    42% {
+        --color1: red;
+        background-color: var(--color1);
+        border-color: var(--color1);
+    }
+
+    58% {
+        --color1: orange;
         background-color: var(--color1);
         border-color: var(--color1);
     }
 
     75% {
-        --color1: #B1FF7D;
+        --color1: yellow;
         background-color: var(--color1);
         border-color: var(--color1);
     }
 
     100% {
-        --color1: #FFAF85;
+        --color1: green;
         background-color: var(--color1);
         border-color: var(--color1);
     }
