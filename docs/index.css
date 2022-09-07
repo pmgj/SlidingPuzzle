@@ -24,7 +24,7 @@ div {
     display: table-cell;
     background-color: var(--color);
     color: white;
-    animation-duration: 5s;
+    animation-duration: 1s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     animation-direction: alternate;
@@ -32,44 +32,19 @@ div {
 
 @keyframes gameover {
     0% {
-        background-color: var(--color);
-        border-color: var(--color);
+        opacity: 1;
     }
 
-    14% {
-        --color1: indigo;
-        background-color: var(--color1);
-        border-color: var(--color1);
+    30% {
+        opacity: 0.8;
     }
 
-    28% {
-        --color1: violet;
-        background-color: var(--color1);
-        border-color: var(--color1);
-    }
-
-    42% {
-        --color1: red;
-        background-color: var(--color1);
-        border-color: var(--color1);
-    }
-
-    58% {
-        --color1: orange;
-        background-color: var(--color1);
-        border-color: var(--color1);
-    }
-
-    75% {
-        --color1: yellow;
-        background-color: var(--color1);
-        border-color: var(--color1);
+    60% {
+        opacity: 0.6;
     }
 
     100% {
-        --color1: green;
-        background-color: var(--color1);
-        border-color: var(--color1);
+        opacity: 0.4;
     }
 }
 
