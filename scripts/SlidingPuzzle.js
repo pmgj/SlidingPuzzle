@@ -1,5 +1,4 @@
 import Cell from "./Cell.js";
-import End from "./End.js";
 
 export default class SlidingPuzzle {
     constructor(size) {
@@ -94,8 +93,7 @@ export default class SlidingPuzzle {
     endOfGame() {
         let array = this.board.flat();
         let lastIndex = array.length - 1;
-        let end = array.every((n, i) => i !== lastIndex ? n === i + 1 : n === 0);
-        return end ? End.YES : End.NO;
+        return array.every((n, i) => i !== lastIndex ? n === i + 1 : n === 0);
     }
     onBoard({ x, y }) {
         let inLimit = (value, limit) => value >= 0 && value < limit;

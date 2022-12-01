@@ -1,5 +1,4 @@
 import Cell from "./Cell.js";
-import End from "./End.js";
 import SlidingPuzzle from "./SlidingPuzzle.js";
 
 class GUI {
@@ -103,7 +102,7 @@ class GUI {
         msg.textContent = message;
     }
     changeMessage(m) {
-        if (m === End.NO) {
+        if (!m) {
             this.setMessage("");
             return;
         }
