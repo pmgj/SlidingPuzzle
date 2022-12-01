@@ -1,5 +1,7 @@
 import Cell from "./Cell.js";
 import SlidingPuzzle from "./SlidingPuzzle.js";
+import Puzzle from "./Puzzle.js";
+import Algorithm from "./Algorithm.js";
 
 class GUI {
     constructor() {
@@ -10,6 +12,8 @@ class GUI {
         size.onchange = this.init.bind(this);
         let start = document.getElementById("start");
         start.onclick = this.init.bind(this);
+        let solve = document.getElementById("solve");
+        solve.onclick = this.solve.bind(this);
         this.init();
     }
     unregisterEvents() {
@@ -19,11 +23,28 @@ class GUI {
             td.ondragover = undefined;
             td.ondrop = undefined;
             let div = td.firstChild;
-            if(div) {
+            if (div) {
                 div.ondragstart = undefined;
                 div.draggable = false;
             }
         });
+    }
+    async solve() {
+        let size = document.getElementById("size");
+        let n = size.valueAsNumber;
+        let p = new Puzzle(n, Algorithm.AManhattan);
+        p.board = this.game.getBoard();
+        let r = p.solve();
+        for (let num of r) {
+            let index = p.board.flat().indexOf(num);
+            let endCell = new Cell(Math.floor(index / n), index % n);
+            let emptyCell = this.game.getEmptyCell(endCell);
+            if (emptyCell) {
+                let bTableData = this.getTableData(endCell);
+                let eTableData = this.getTableData(emptyCell);
+                await new Promise(resolve => this.innerPlay(bTableData, eTableData, true, resolve));
+            }
+        }
     }
     init() {
         let size = document.getElementById("size");
@@ -75,7 +96,7 @@ class GUI {
             this.innerPlay(bTableData, eTableData, true);
         }
     }
-    innerPlay(bTableData, eTableData, animation) {
+    innerPlay(bTableData, eTableData, animation, resolve) {
         let beginCell = this.coordinates(bTableData);
         let endCell = this.coordinates(eTableData);
         let image = bTableData.firstChild;
@@ -84,6 +105,7 @@ class GUI {
             let move = () => {
                 eTableData.appendChild(image);
                 this.changeMessage(end);
+                if (resolve) resolve(true);
             };
             if (animation) {
                 let { x: or, y: oc } = beginCell;
