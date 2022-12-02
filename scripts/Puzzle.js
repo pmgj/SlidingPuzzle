@@ -124,8 +124,3 @@ export default class Puzzle {
         return this.solve_func === Algorithm.BFS ? this.solveBFS() : this.solveA();
     }
 };
-
-// let p = new Puzzle([[1, 0, 3], [5, 2, 6], [4, 7, 8]], Algorithm.AManhattan);
-// console.table(p.board);
-// let r = p.solve();
-// console.log(r);
