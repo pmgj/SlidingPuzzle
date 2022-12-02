@@ -8,7 +8,7 @@ let Direction = {
 };
 
 export default class Puzzle {
-    constructor(board, solve_func = Algorithm.AManhattan) {
+    constructor(board, solve_func = Algorithm.BFS) {
         this.board = board;
         this.path = [];
         this.dimension = this.board.length;
@@ -82,8 +82,7 @@ export default class Puzzle {
         startingState.path = [];
         let states = [startingState];
         while (states.length > 0) {
-            let state = states[0];
-            states.shift();
+            let state = states.shift();
             if (state.isGoalState()) {
                 return state.path;
             }
@@ -126,8 +125,7 @@ export default class Puzzle {
     }
 };
 
-// let p = new Puzzle(3, Algorithm.AManhattan);
-// p.board = [[1, 0, 3], [5, 2, 6], [4, 7, 8]];
+// let p = new Puzzle([[1, 0, 3], [5, 2, 6], [4, 7, 8]], Algorithm.AManhattan);
 // console.table(p.board);
 // let r = p.solve();
 // console.log(r);
