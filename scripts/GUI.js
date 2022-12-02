@@ -1,7 +1,6 @@
 import Cell from "./Cell.js";
 import SlidingPuzzle from "./SlidingPuzzle.js";
 import Puzzle from "./Puzzle.js";
-import Algorithm from "./Algorithm.js";
 
 class GUI {
     constructor() {
@@ -32,8 +31,7 @@ class GUI {
     async solve() {
         let size = document.getElementById("size");
         let n = size.valueAsNumber;
-        let p = new Puzzle(n, Algorithm.AManhattan);
-        p.board = this.game.getBoard();
+        let p = new Puzzle(this.game.getBoard());
         let r = p.solve();
         for (let num of r) {
             let index = p.board.flat().indexOf(num);

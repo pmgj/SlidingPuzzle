@@ -8,24 +8,24 @@ let Direction = {
 };
 
 export default class Puzzle {
-    constructor(dimension, solve_func) {
-        this.board = Array(dimension).fill().map(() => Array(dimension).fill());
+    constructor(board, solve_func = Algorithm.AManhattan) {
+        this.board = board;
         this.path = [];
-        this.dimension = dimension;
+        this.dimension = this.board.length;
         this.solve_func = solve_func;
         this.lastMove = null;
     }
     // Get the (x, y) position of the blank space
-    getBlankSpacePosition = function () {
+    getBlankSpacePosition() {
         let index = this.board.flat().indexOf(0);
         return [Math.floor(index / this.dimension), index % this.dimension];
-    };
+    }
     // Swap two items on a bidimensional array
-    swap = function (i1, j1, i2, j2) {
+    swap(i1, j1, i2, j2) {
         [this.board[i1][j1], this.board[i2][j2]] = [this.board[i2][j2], this.board[i1][j1]];
     }
     // Return the direction that a piece can be moved, if any
-    getMove = function (piece) {
+    getMove(piece) {
         let [line, column] = this.getBlankSpacePosition();
         if (line > 0 && piece === this.board[line - 1][column]) {
             return Direction.DOWN;
@@ -36,9 +36,9 @@ export default class Puzzle {
         } else if (column < this.dimension - 1 && piece === this.board[line][column + 1]) {
             return Direction.LEFT;
         }
-    };
+    }
     // Move a piece, if possible, and return the direction that it was moved
-    move = function (piece) {
+    move(piece) {
         let move = this.getMove(piece);
         if (move) {
             let [line, column] = this.getBlankSpacePosition();
@@ -48,24 +48,23 @@ export default class Puzzle {
             this.lastMove = piece;
             return move;
         }
-    };
-    isGoalState = function () {
+    }
+    isGoalState() {
         let array = this.board.flat();
         let lastIndex = array.length - 1;
         return array.every((n, i) => i !== lastIndex ? n === i + 1 : n === 0);
-    };
+    }
     // Return a copy of current puzzle
-    getCopy = function () {
-        let newPuzzle = new Puzzle(this.dimension);
-        newPuzzle.board = JSON.parse(JSON.stringify(this.board));
+    getCopy() {
+        let newPuzzle = new Puzzle(JSON.parse(JSON.stringify(this.board)), this.solve_func);
         this.path.forEach(p => newPuzzle.path.push(p));
         return newPuzzle;
-    };
+    }
     // Return all current allowed moves
-    getAllowedMoves = function () {
+    getAllowedMoves() {
         return this.board.flat().filter(piece => this.getMove(piece));
-    };
-    visit = function () {
+    }
+    visit() {
         let children = [];
         let allowedMoves = this.getAllowedMoves();
         for (let move of allowedMoves) {
@@ -77,8 +76,8 @@ export default class Puzzle {
             }
         }
         return children;
-    };
-    solveBFS = function () {
+    }
+    solveBFS() {
         let startingState = this.getCopy();
         startingState.path = [];
         let states = [startingState];
@@ -90,22 +89,22 @@ export default class Puzzle {
             }
             states = states.concat(state.visit());
         }
-    };
-    g = function () {
+    }
+    g() {
         return this.path.length;
-    };
-    getManhattanDistance = function () {
+    }
+    getManhattanDistance() {
         let row = v => Math.floor(v / this.dimension);
         let col = v => v % this.dimension;
         return this.board.flat().map((piece, i) => piece !== 0 ? Math.abs(row(i) - row(piece - 1)) + Math.abs(col(i) - col(piece - 1)) : 0).reduce((a, b) => a + b, 0);
-    };
-    countMisplaced = function () {
+    }
+    countMisplaced() {
         return this.board.flat().filter((piece, i) => piece !== 0 && piece !== i + 1).length;
     }
-    h = function () {
+    h() {
         return this.solve_func === Algorithm.AMisplaced ? this.countMisplaced() : this.getManhattanDistance();
-    };
-    solveA = function () {
+    }
+    solveA() {
         let states = [];
         this.path = [];
         states.push({ puzzle: this, distance: 0 });
@@ -121,10 +120,10 @@ export default class Puzzle {
                 states.sort((a, b) => a.distance - b.distance);
             }
         }
-    };
-    solve = function () {
+    }
+    solve() {
         return this.solve_func === Algorithm.BFS ? this.solveBFS() : this.solveA();
-    };
+    }
 };
 
 // let p = new Puzzle(3, Algorithm.AManhattan);
