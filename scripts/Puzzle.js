@@ -8,7 +8,7 @@ let Direction = {
 };
 
 export default class Puzzle {
-    constructor(board, solve_func = Algorithm.BFS) {
+    constructor(board, solve_func = Algorithm.AManhattan) {
         this.board = board;
         this.path = [];
         this.dimension = this.board.length;
@@ -116,8 +116,8 @@ export default class Puzzle {
             for (let child of children) {
                 let f = child.g() + child.h();
                 states.push({ puzzle: child, distance: f });
-                states.sort((a, b) => a.distance - b.distance);
             }
+            states.sort((a, b) => a.distance - b.distance);
         }
     }
     solve() {
