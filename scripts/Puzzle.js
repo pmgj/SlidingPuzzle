@@ -46,7 +46,6 @@ export default class Puzzle {
             let { x, y } = map[move];
             this.swap(line, column, line + x, column + y);
             this.lastMove = piece;
-            return move;
         }
     }
     isGoalState() {
@@ -62,7 +61,9 @@ export default class Puzzle {
     }
     // Return all current allowed moves
     getAllowedMoves() {
-        return this.board.flat().filter(piece => this.getMove(piece));
+        let [line, column] = this.getBlankSpacePosition();
+        let positions = [{x: line - 1, y: column}, {x: line + 1, y: column}, {x: line, y: column - 1}, {x: line, y: column + 1}];
+        return positions.filter(({x, y}) => x >= 0 && x < this.dimension && y >= 0 && y < this.dimension).map(({x, y}) => this.board[x][y]);
     }
     visit() {
         let children = [];
@@ -123,4 +124,4 @@ export default class Puzzle {
     solve() {
         return this.solve_func === Algorithm.BFS ? this.solveBFS() : this.solveA();
     }
-};
+}
