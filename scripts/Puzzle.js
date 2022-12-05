@@ -25,8 +25,7 @@ export default class Puzzle {
         [this.board[i1][j1], this.board[i2][j2]] = [this.board[i2][j2], this.board[i1][j1]];
     }
     // Return the direction that a piece can be moved, if any
-    getMove(piece) {
-        let [line, column] = this.getBlankSpacePosition();
+    getMove(piece, [line, column]) {
         if (line > 0 && piece === this.board[line - 1][column]) {
             return Direction.DOWN;
         } else if (line < this.dimension - 1 && piece === this.board[line + 1][column]) {
@@ -39,9 +38,9 @@ export default class Puzzle {
     }
     // Move a piece, if possible, and return the direction that it was moved
     move(piece) {
-        let move = this.getMove(piece);
+        let [line, column] = this.getBlankSpacePosition();
+        let move = this.getMove(piece, [line, column]);
         if (move) {
-            let [line, column] = this.getBlankSpacePosition();
             let map = { "LEFT": { x: 0, y: 1 }, "RIGHT": { x: 0, y: -1 }, "UP": { x: 1, y: 0 }, "DOWN": { x: -1, y: 0 } };
             let { x, y } = map[move];
             this.swap(line, column, line + x, column + y);
