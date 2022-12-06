@@ -25,9 +25,9 @@ function test1() {
     console.table(p.board);
 }
 function test2() {
-    let algorithms = [Algorithm.AManhattan, Algorithm.BFS, Algorithm.AMisplaced];
+    let algorithms = [Algorithm.AManhattan, Algorithm.AMisplaced, Algorithm.BFS];
     for(let alg of algorithms) {
-        let p = new Puzzle([[7, 5, 8], [2, 4, 1], [3, 6, 0]], alg);
+        let p = new Puzzle([[3, 6, 4], [2, 5, 0], [7, 8, 1]], alg);
         let start = Date.now();
         let r = p.solve();
         let end = Date.now();
