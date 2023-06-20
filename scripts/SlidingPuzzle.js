@@ -16,7 +16,6 @@ export default class SlidingPuzzle {
         this.shuffle();
     }
     shuffle() {
-        let array = this.board.flat();
         let randomize = array => {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
@@ -55,13 +54,14 @@ export default class SlidingPuzzle {
                 [puzzle[puzzle.length - 1], puzzle[puzzle.length - 2]] = [puzzle[puzzle.length - 2], puzzle[puzzle.length - 1]];
             }
         };
+        let array = this.board.flat();
         randomize(array);
         let numberInversions = countInversions(array);
         if (!isSlidePuzzleSolvable(numberInversions, array.indexOf(0))) {
             SwapTilesInSlidePuzzle(array);
         }
         for (let i = 0; i < array.length; i++) {
-            this.board[Math.floor(i / this.size)][Math.floor(i % this.size)] = array[i];
+            this.board[Math.floor(i / this.size)][i % this.size] = array[i];
         }
     }
     move(beginCell, endCell) {
@@ -105,12 +105,6 @@ export default class SlidingPuzzle {
     getEmptyCell(cell) {
         let { x, y } = cell;
         let cells = [new Cell(x - 1, y), new Cell(x + 1, y), new Cell(x, y - 1), new Cell(x, y + 1)];
-        for (let c of cells) {
-            let { x: row, y: col } = c;
-            if (this.onBoard(c) && this.board[row][col] === 0) {
-                return c;
-            }
-        }
-        return null;
+        return cells.find(c => this.onBoard(c) && this.board[c.x][c.y] === 0);
     }
 }
