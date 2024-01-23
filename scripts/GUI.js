@@ -37,11 +37,9 @@ class GUI {
             let index = p.board.flat().indexOf(num);
             let endCell = new Cell(Math.floor(index / n), index % n);
             let emptyCell = this.game.getEmptyCell(endCell);
-            if (emptyCell) {
-                let bTableData = this.getTableData(endCell);
-                let eTableData = this.getTableData(emptyCell);
-                await new Promise(resolve => this.innerPlay(bTableData, eTableData, true, resolve));
-            }
+            let bTableData = this.getTableData(endCell);
+            let eTableData = this.getTableData(emptyCell);
+            await new Promise(resolve => this.innerPlay(bTableData, eTableData, true, resolve));
         }
     }
     init() {
@@ -108,7 +106,8 @@ class GUI {
             if (animation) {
                 let { x: or, y: oc } = beginCell;
                 let { x: dr, y: dc } = endCell;
-                let anim = image.animate([{ top: 0, left: 0 }, { top: `${(dr - or) * 58}px`, left: `${(dc - oc) * 58}px` }], 500);
+                let size = bTableData.offsetHeight;
+                let anim = image.animate([{ top: 0, left: 0 }, { top: `${(dr - or) * size}px`, left: `${(dc - oc) * size}px` }], 500);
                 anim.onfinish = move;
             } else {
                 move();

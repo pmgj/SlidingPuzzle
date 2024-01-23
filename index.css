@@ -4,6 +4,7 @@ body {
 
 table {
     margin: 0 auto;
+    border-collapse: separate;
 }
 
 caption {
@@ -11,15 +12,16 @@ caption {
     font-size: x-large;
 }
 
-div {
+table div {
     cursor: default;
     text-align: center;
-    font-size: 24px;
     font-family: sans-serif;
     position: relative;
     border: 3px solid var(--color);
-    width: 49px;
-    height: 49px;
+    --cell-size: 10vmin;
+    width: clamp(60px, var(--cell-size), 80px);
+    height: clamp(60px, var(--cell-size), 80px);
+    font-size: clamp(1.5em, 3vmin, 2em);
     vertical-align: middle;
     display: table-cell;
     background-color: var(--color);
