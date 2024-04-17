@@ -7,11 +7,6 @@ table {
     border-collapse: separate;
 }
 
-caption {
-    font-weight: bold;
-    font-size: x-large;
-}
-
 table div {
     cursor: default;
     text-align: center;
@@ -48,10 +43,6 @@ table div {
     100% {
         opacity: 0.4;
     }
-}
-
-p {
-    text-align: center;
 }
 
 #size {
